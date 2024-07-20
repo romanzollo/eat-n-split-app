@@ -1,1 +1,1 @@
-# Travel List App
+# Eat-N-Split App
