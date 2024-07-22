@@ -10,23 +10,44 @@ import { initialFriends } from '../data/data';
 function App() {
     const [friends, setFriends] = useState(initialFriends);
     const [showAddFriend, setShowAddFriend] = useState(false);
+    const [selectedFriend, setSelectedFriend] = useState(null);
 
+    // отображения формы добавления друга
     function handleShowAddFriend() {
         // используем callback для изменения состояния так как новое состояние
         // зависет от текущего состояния (ОБЯЗАТЕЛЬНО!!!)
         setShowAddFriend((show) => !show);
     }
 
+    // добавление друга
     function handleAddFriend(newFriend) {
         setFriends((friends) => [...friends, newFriend]);
         // закрываем форму
         setShowAddFriend(false);
     }
 
+    // выбор друга
+    function handleSelection(friend) {
+        // setSelectedFriend(friend);
+
+        // используем опциональную цепочка (?.) так как selectedFriend может быть null
+        // или вместо null используем false
+        setSelectedFriend((cur) => (cur?.id === friend.id ? false : friend));
+
+        // закрываем форму добавления друга если он открыт и мы выбираем уже существующего друга
+        // (для удобства пользователя)
+        setShowAddFriend(false);
+    }
+
     return (
         <div className="app">
             <div className="sidebar">
-                <FriendsList friends={friends} />
+                <FriendsList
+                    friends={friends}
+                    selectedFriend={selectedFriend}
+                    onSelection={handleSelection}
+                />
+
                 {showAddFriend && (
                     <FormAddFriend onAddFriend={handleAddFriend} />
                 )}
@@ -37,7 +58,9 @@ function App() {
                 </Button>
             </div>
 
-            <FormSplitBill />
+            {selectedFriend && (
+                <FormSplitBill selectedFriend={selectedFriend} />
+            )}
         </div>
     );
 }
