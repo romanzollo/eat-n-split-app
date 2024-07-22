@@ -6,13 +6,13 @@ function FormSplitBill() {
             <h2>Split a bill with X</h2>
 
             <label>💰 Bill value</label>
-            <input type="text" />
+            <input type="number" />
 
             <label>😎 Your expense</label>
-            <input type="text" />
+            <input type="number" />
 
             <label>👫 X's expense</label>
-            <input type="text" disabled />
+            <input type="number" disabled />
 
             <label>🤑 Who is paying the bill</label>
             <select>
